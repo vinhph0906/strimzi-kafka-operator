@@ -154,7 +154,7 @@ public class ClusterCa extends Ca {
 
         Function<NodeRef, Subject> subjectFn = node -> {
             Subject.Builder subject = new Subject.Builder()
-                    .withOrganizationName("io.strimzi")
+                    .withOrganizationName("vkaas.vngcloud.vn")
                     .withCommonName(CruiseControlResources.serviceName(kafkaName));
 
             subject.addDnsName(CruiseControlResources.serviceName(kafkaName));
@@ -186,7 +186,7 @@ public class ClusterCa extends Ca {
 
         Function<NodeRef, Subject> subjectFn = node -> {
             Subject.Builder subject = new Subject.Builder()
-                    .withOrganizationName("io.strimzi")
+                    .withOrganizationName("vkaas.vngcloud.vn")
                     .withCommonName(KafkaResources.zookeeperComponentName(crName));
             subject.addDnsName(KafkaResources.zookeeperServiceName(crName));
             subject.addDnsName(String.format("%s.%s", KafkaResources.zookeeperServiceName(crName), namespace));
@@ -221,7 +221,7 @@ public class ClusterCa extends Ca {
     ) throws IOException {
         Function<NodeRef, Subject> subjectFn = node -> {
             Subject.Builder subject = new Subject.Builder()
-                    .withOrganizationName("io.strimzi")
+                    .withOrganizationName("vkaas.vngcloud.vn")
                     .withCommonName(KafkaResources.kafkaComponentName(crName));
 
             subject.addDnsNames(ModelUtils.generateAllServiceDnsNames(namespace, KafkaResources.bootstrapServiceName(crName)));

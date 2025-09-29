@@ -655,13 +655,13 @@ public class KafkaBrokerConfigurationBuilder {
             List<String> superUsers = new ArrayList<>();
 
             // Broker super users
-            superUsers.add(String.format("User:CN=%s,O=io.strimzi", KafkaResources.kafkaComponentName(clusterName)));
-            superUsers.add(String.format("User:CN=%s-%s,O=io.strimzi", clusterName, "entity-topic-operator"));
-            superUsers.add(String.format("User:CN=%s-%s,O=io.strimzi", clusterName, "entity-user-operator"));
-            superUsers.add(String.format("User:CN=%s-%s,O=io.strimzi", clusterName, "kafka-exporter"));
-            superUsers.add(String.format("User:CN=%s-%s,O=io.strimzi", clusterName, "cruise-control"));
+            superUsers.add(String.format("User:CN=%s,O=vkaas.vngcloud.vn", KafkaResources.kafkaComponentName(clusterName)));
+            superUsers.add(String.format("User:CN=%s-%s,O=vkaas.vngcloud.vn", clusterName, "entity-topic-operator"));
+            superUsers.add(String.format("User:CN=%s-%s,O=vkaas.vngcloud.vn", clusterName, "entity-user-operator"));
+            superUsers.add(String.format("User:CN=%s-%s,O=vkaas.vngcloud.vn", clusterName, "kafka-exporter"));
+            superUsers.add(String.format("User:CN=%s-%s,O=vkaas.vngcloud.vn", clusterName, "cruise-control"));
 
-            superUsers.add(String.format("User:CN=%s,O=io.strimzi", "cluster-operator"));
+            superUsers.add(String.format("User:CN=%s,O=vkaas.vngcloud.vn", "cluster-operator"));
 
             printSectionHeader("Authorization");
             // when the StandardAuthorizer has to replace the AclAuthorizer during the migration depending on nodes in full KRaft

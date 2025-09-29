@@ -29,54 +29,25 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 @JsonDeserialize
-@Crd(
-    spec = @Crd.Spec(
-        names = @Crd.Spec.Names(
-            kind = KafkaConnect.RESOURCE_KIND,
-            plural = KafkaConnect.RESOURCE_PLURAL,
-            shortNames = {KafkaConnect.SHORT_NAME},
-            categories = {Constants.STRIMZI_CATEGORY}
-        ),
-        group = KafkaConnect.RESOURCE_GROUP,
-        scope = KafkaConnect.SCOPE,
-        versions = {
-            @Crd.Spec.Version(name = KafkaConnect.V1BETA2, served = true, storage = false),
-            @Crd.Spec.Version(name = KafkaConnect.V1BETA1, served = true, storage = true),
-            @Crd.Spec.Version(name = KafkaConnect.V1ALPHA1, served = true, storage = false)
-        },
-        subresources = @Crd.Spec.Subresources(
-            status = @Crd.Spec.Subresources.Status(),
-            scale = @Crd.Spec.Subresources.Scale(
-                specReplicasPath = KafkaConnect.SPEC_REPLICAS_PATH,
-                statusReplicasPath = KafkaConnect.STATUS_REPLICAS_PATH,
-                labelSelectorPath = KafkaConnect.LABEL_SELECTOR_PATH
-            )
-        ),
-        additionalPrinterColumns = {
-            @Crd.Spec.AdditionalPrinterColumn(
-                name = "Desired replicas",
-                description = "The desired number of Kafka Connect replicas",
-                jsonPath = ".spec.replicas",
-                type = "integer"),
-            @Crd.Spec.AdditionalPrinterColumn(
-                name = "Ready",
-                description = "The state of the custom resource",
-                jsonPath = ".status.conditions[?(@.type==\"Ready\")].status",
-                type = "string")
-        }
-    )
-)
-@Buildable(
-        editableEnabled = false,
-        builderPackage = Constants.FABRIC8_KUBERNETES_API,
-        refs = {@BuildableReference(CustomResource.class)}
-)
+@Crd(spec = @Crd.Spec(names = @Crd.Spec.Names(kind = KafkaConnect.RESOURCE_KIND, plural = KafkaConnect.RESOURCE_PLURAL, shortNames = {
+        KafkaConnect.SHORT_NAME }, categories = {
+                Constants.STRIMZI_CATEGORY }), group = KafkaConnect.RESOURCE_GROUP, scope = KafkaConnect.SCOPE, versions = {
+                        @Crd.Spec.Version(name = KafkaConnect.V1BETA2, served = true, storage = false),
+                        @Crd.Spec.Version(name = KafkaConnect.V1BETA1, served = true, storage = true),
+                        @Crd.Spec.Version(name = KafkaConnect.V1ALPHA1, served = true, storage = false)
+                }, subresources = @Crd.Spec.Subresources(status = @Crd.Spec.Subresources.Status(), scale = @Crd.Spec.Subresources.Scale(specReplicasPath = KafkaConnect.SPEC_REPLICAS_PATH, statusReplicasPath = KafkaConnect.STATUS_REPLICAS_PATH, labelSelectorPath = KafkaConnect.LABEL_SELECTOR_PATH)), additionalPrinterColumns = {
+                        @Crd.Spec.AdditionalPrinterColumn(name = "Desired replicas", description = "The desired number of Kafka Connect replicas", jsonPath = ".spec.replicas", type = "integer"),
+                        @Crd.Spec.AdditionalPrinterColumn(name = "Ready", description = "The state of the custom resource", jsonPath = ".status.conditions[?(@.type==\"Ready\")].status", type = "string")
+                }))
+@Buildable(editableEnabled = false, builderPackage = Constants.FABRIC8_KUBERNETES_API, refs = {
+        @BuildableReference(CustomResource.class) })
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"apiVersion", "kind", "metadata", "spec", "status"})
+@JsonPropertyOrder({ "apiVersion", "kind", "metadata", "spec", "status" })
 @EqualsAndHashCode
 @Version(Constants.V1BETA2)
 @Group(Constants.RESOURCE_GROUP_NAME)
-public class KafkaConnect extends CustomResource<KafkaConnectSpec, KafkaConnectStatus> implements Namespaced, UnknownPropertyPreserving {
+public class KafkaConnect extends CustomResource<KafkaConnectSpec, KafkaConnectStatus>
+        implements Namespaced, UnknownPropertyPreserving {
     private static final long serialVersionUID = 1L;
 
     public static final String SCOPE = "Namespaced";
@@ -146,11 +117,14 @@ public class KafkaConnect extends CustomResource<KafkaConnectSpec, KafkaConnectS
     }
 
     /**
-     * Returns a predicate that determines if KafkaConnect is ready. A KafkaConnect CRD is
-     * ready if the observedGeneration of its status is equal to the generation of its metadata
+     * Returns a predicate that determines if KafkaConnect is ready. A KafkaConnect
+     * CRD is
+     * ready if the observedGeneration of its status is equal to the generation of
+     * its metadata
      * and any of the conditions of its status has type:"Ready" and status:"True"
      * <p>
-     * See {@link CustomResourceConditions CustomResourceConditions} for explanation/examples
+     * See {@link CustomResourceConditions CustomResourceConditions} for
+     * explanation/examples
      *
      * @return a predicate that checks if a KafkaConnect is ready
      */

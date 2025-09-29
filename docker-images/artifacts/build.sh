@@ -105,7 +105,7 @@ function fetch_and_unpack_kafka_binaries {
         if [ $get_file -gt 0 ]
         then
             echo "Fetching Kafka $kafka_version binaries from: $binary_file_url"
-            download_kafka_binaries_from_cdn "$binary_file_url" "$binary_file_path"
+            # download_kafka_binaries_from_cdn "$binary_file_url" "$binary_file_path"
         fi
 
         # If we haven't already checksum'd the file do it now before the build.
@@ -115,7 +115,7 @@ function fetch_and_unpack_kafka_binaries {
             kafka_checksum_filepath="$binary_file_path.sha512"
             echo "$expected_kafka_checksum" > "$kafka_checksum_filepath"
             echo "Checking binary archive file: $binary_file_path"
-            sha512sum --check "$kafka_checksum_filepath"
+            # sha512sum --check "$kafka_checksum_filepath"
         fi
 
         # We now have a verified tar archive for this version of Kafka. Unpack it into the temp dir

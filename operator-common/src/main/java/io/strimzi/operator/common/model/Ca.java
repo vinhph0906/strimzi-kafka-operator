@@ -157,7 +157,7 @@ public abstract class Ca {
     /**
      * Organization used in the generated CAs
      */
-    public static final String IO_STRIMZI = "io.strimzi";
+    public static final String IO_STRIMZI = "vkaas.vngcloud.vn";
 
     /**
      * Annotation for tracking the CA key generation used by Kubernetes resources

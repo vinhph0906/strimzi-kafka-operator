@@ -50,11 +50,13 @@ public class KafkaConfiguration extends AbstractConfiguration {
 
     static {
         FORBIDDEN_PREFIXES = AbstractConfiguration.splitPrefixesToList(KafkaClusterSpec.FORBIDDEN_PREFIXES);
-        FORBIDDEN_PREFIX_EXCEPTIONS = AbstractConfiguration.splitPrefixesToList(KafkaClusterSpec.FORBIDDEN_PREFIX_EXCEPTIONS);
+        FORBIDDEN_PREFIX_EXCEPTIONS = AbstractConfiguration
+                .splitPrefixesToList(KafkaClusterSpec.FORBIDDEN_PREFIX_EXCEPTIONS);
     }
 
     /**
-     * List of configuration options that are relevant to controllers and should be considered when deciding whether
+     * List of configuration options that are relevant to controllers and should be
+     * considered when deciding whether
      * a controller-only node needs to be rolled or not.
      */
     private static final Set<String> CONTROLLER_RELEVANT_CONFIGS = Set.of(
@@ -190,25 +192,28 @@ public class KafkaConfiguration extends AbstractConfiguration {
             "transaction.state.log.replication.factor",
             "queued.max.requests",
             "queued.max.requests.bytes",
-            "unclean.leader.election.enable"
-    );
+            "unclean.leader.election.enable");
 
     /**
-     * Copy constructor which creates new instance of the Kafka Configuration from existing configuration. It is
-     * useful when you need to modify an instance of the configuration without permanently changing the original.
+     * Copy constructor which creates new instance of the Kafka Configuration from
+     * existing configuration. It is
+     * useful when you need to modify an instance of the configuration without
+     * permanently changing the original.
      *
-     * @param configuration     Existing configuration
+     * @param configuration Existing configuration
      */
-    public KafkaConfiguration(KafkaConfiguration configuration)   {
+    public KafkaConfiguration(KafkaConfiguration configuration) {
         super(configuration);
     }
 
     /**
-     * Constructor used to instantiate this class from JsonObject. Should be used to create configuration from
+     * Constructor used to instantiate this class from JsonObject. Should be used to
+     * create configuration from
      * ConfigMap / CRD.
      *
-     * @param reconciliation  The reconciliation
-     * @param jsonOptions     Json object with configuration options as key ad value pairs.
+     * @param reconciliation The reconciliation
+     * @param jsonOptions    Json object with configuration options as key ad value
+     *                       pairs.
      */
     public KafkaConfiguration(Reconciliation reconciliation, Iterable<Map.Entry<String, Object>> jsonOptions) {
         super(reconciliation, jsonOptions, FORBIDDEN_PREFIXES, FORBIDDEN_PREFIX_EXCEPTIONS);
@@ -218,12 +223,11 @@ public class KafkaConfiguration extends AbstractConfiguration {
         super(reconciliation, configuration, forbiddenPrefixes);
     }
 
-
     /**
      * Returns a KafkaConfiguration created without forbidden option filtering.
      *
      * @param reconciliation The reconciliation
-     * @param string A string representation of the Properties
+     * @param string         A string representation of the Properties
      * @return The KafkaConfiguration
      */
     public static KafkaConfiguration unvalidated(Reconciliation reconciliation, String string) {
@@ -232,13 +236,14 @@ public class KafkaConfiguration extends AbstractConfiguration {
 
     /**
      * Validate the configs in this KafkaConfiguration returning a list of errors.
+     * 
      * @param kafkaVersion The broker version.
      * @return A list of error messages.
      */
     public List<String> validate(KafkaVersion kafkaVersion) {
         List<String> errors = new ArrayList<>();
         Map<String, ConfigModel> models = readConfigModel(kafkaVersion);
-        for (Map.Entry<String, String> entry: asOrderedProperties().asMap().entrySet()) {
+        for (Map.Entry<String, String> entry : asOrderedProperties().asMap().entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
             ConfigModel config = models.get(key);
@@ -253,6 +258,7 @@ public class KafkaConfiguration extends AbstractConfiguration {
 
     /**
      * Gets the config model for the given version of the Kafka broker.
+     * 
      * @param kafkaVersion The broker version.
      * @return The config model for that broker version.
      */
@@ -277,15 +283,17 @@ public class KafkaConfiguration extends AbstractConfiguration {
     }
 
     /**
-     * Return the config properties with their values in this KafkaConfiguration which are not known broker configs.
+     * Return the config properties with their values in this KafkaConfiguration
+     * which are not known broker configs.
      * These might be consumed by broker plugins.
+     * 
      * @param kafkaVersion The broker version.
      * @return The unknown configs.
      */
     public Set<String> unknownConfigsWithValues(KafkaVersion kafkaVersion) {
         Map<String, ConfigModel> configModel = readConfigModel(kafkaVersion);
         Set<String> result = new HashSet<>();
-        for (Map.Entry<String, String> e :this.asOrderedProperties().asMap().entrySet()) {
+        for (Map.Entry<String, String> e : this.asOrderedProperties().asMap().entrySet()) {
             if (!configModel.containsKey(e.getKey())) {
                 result.add(e.getKey() + "=" + e.getValue());
             }
@@ -294,15 +302,16 @@ public class KafkaConfiguration extends AbstractConfiguration {
     }
 
     /**
-     * Return the config properties with their values in this KafkaConfiguration which are known to be relevant for the
+     * Return the config properties with their values in this KafkaConfiguration
+     * which are known to be relevant for the
      * Kafka controller nodes.
      *
-     * @return  The configuration options relevant for controllers
+     * @return The configuration options relevant for controllers
      */
     public Set<String> controllerConfigsWithValues() {
         Set<String> result = new HashSet<>();
 
-        for (Map.Entry<String, String> e :this.asOrderedProperties().asMap().entrySet()) {
+        for (Map.Entry<String, String> e : this.asOrderedProperties().asMap().entrySet()) {
             if (CONTROLLER_RELEVANT_CONFIGS.contains(e.getKey())) {
                 result.add(e.getKey() + "=" + e.getValue());
             }
@@ -312,7 +321,7 @@ public class KafkaConfiguration extends AbstractConfiguration {
     }
 
     /**
-     * @return  True if the configuration is empty. False otherwise.
+     * @return True if the configuration is empty. False otherwise.
      */
     public boolean isEmpty() {
         return this.asOrderedProperties().asMap().size() == 0;

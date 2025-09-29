@@ -19,13 +19,11 @@ import java.util.Map;
 import static java.util.Collections.emptyMap;
 
 /**
- * Represents a single used KafkaNodePool. This class is used in the status section of the Kafka custom resource to
+ * Represents a single used KafkaNodePool. This class is used in the status
+ * section of the Kafka custom resource to
  * indicate which KafkaNodePools are used by this Kafka cluster.
  */
-@Buildable(
-        editableEnabled = false,
-        builderPackage = Constants.FABRIC8_KUBERNETES_API
-)
+@Buildable(editableEnabled = false, builderPackage = Constants.FABRIC8_KUBERNETES_API)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "name" })
 @EqualsAndHashCode

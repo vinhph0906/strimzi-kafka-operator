@@ -121,7 +121,7 @@
         <checkstyle.version>10.12.2</checkstyle.version>
         <spotbugs.version>4.7.3</spotbugs.version>
         <sundrio.version>0.100.3</sundrio.version>
-        <lombok.version>1.18.24</lombok.version>
+        <lombok.version>1.18.30</lombok.version>
 
         <!-- Runtime dependencies -->
         <fabric8.kubernetes-client.version>6.10.0</fabric8.kubernetes-client.version>
